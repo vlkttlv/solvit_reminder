@@ -19,7 +19,7 @@ async def add_questions_in_db(
     topics: List[str] = Query(default=all_topics)):
     """Эндпоинт добавляет вопросы в базу данных на основе указанных грейдов и технологий."""
     count = 0
-    for i in range(100, 1000):
+    for i in range(100, 2800):
         url = f"{base_url}{i}"  # URL для получения вопроса по номеру
         data = get_data(url, topics, grades)
         if data is not None:
