@@ -23,10 +23,6 @@ async def add_questions_in_db(
         url = f"{base_url}{i}"  # URL для получения вопроса по номеру
         data = get_data(url, topics, grades)
         if data is not None:
-            print(
-                f"Была добавлена запись: {
-                  data['technology']} - {data['grade']} - {url}"
-            )
             count += 1
             await QuestionsDAO.add(**data)
     return {"status": "success",
