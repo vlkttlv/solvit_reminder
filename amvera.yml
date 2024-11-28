@@ -1,0 +1,12 @@
+meta:
+  environment: python
+  toolchain:
+    name: pip
+    version: 3.12.6
+build:
+  requirementsPath: requirements.txt
+run:
+  persistenceMount: /data
+  containerPort: "8000"
+  command: alembic upgrade head && gunicorn app.main:app --workers 1
+    --worker-class uvicorn.workers.UvicornWorker --bind=0.0.0.0:8000

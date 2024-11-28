@@ -9,9 +9,7 @@ router = APIRouter(
 )
 
 base_url = "https://solvit.space/questions/"
-all_topics = ["Python", "Базы данных и SQL", "Git", "Docker",
-              "Вопросы от рекрутеров", "Java", "C#", "C++", "Golang",
-              "JavaScript", "HTML", "CSS", "Computer Science"]
+all_topics = ["Python", "Базы данных и SQL", "Git", "Docker", "Вопросы от рекрутеров"]
 all_grades = ["Стажёр", "Джун", "Мидл", "Сеньор"]
 
 
@@ -21,7 +19,7 @@ async def add_questions_in_db(
     topics: List[str] = Query(default=all_topics)):
     """Эндпоинт добавляет вопросы в базу данных на основе указанных грейдов и технологий."""
     count = 0
-    for i in range(2500, 2745):
+    for i in range(100, 1000):
         url = f"{base_url}{i}"  # URL для получения вопроса по номеру
         data = get_data(url, topics, grades)
         if data is not None:
@@ -46,7 +44,7 @@ async def get_questions(
     Эндпоинт получает список вопросов и настраивает периодическую \
     отправку электронных писем с указанным содержимым.
     """
-    all_questions = await QuestionsDAO.find_all(topics, grades)
+    all_questions = await QuestionsDAO.find_all_by_topics_grades(topics, grades)
     background_tasks.add_task(periodic_send_email, email, period_time, all_questions)
     return {"status": "success",
             "message": f"Письма будут отправляться каждые {period_time} минут. \
@@ -57,6 +55,6 @@ async def get_questions(
 @router.get("/get_questions")
 async def get_all_questions(grades: List[str] = Query(default=all_grades),
                             topics: List[str] = Query(default=all_topics)):
-    all_questions = await QuestionsDAO.find_all(topics, grades)
+    all_questions = await QuestionsDAO.find_all_by_topics_grades(topics, grades)
     return all_questions
 

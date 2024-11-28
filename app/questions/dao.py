@@ -9,7 +9,7 @@ class QuestionsDAO():
     model = Questions
 
     @classmethod
-    async def find_all(cls, topics, grades):
+    async def find_all_by_topics_grades(cls, topics, grades):
         '''
         Находит и возвращает все записи из БД, удовлетворяющие условию,
         что грейд и технология есть в списке, который передал пользователь
