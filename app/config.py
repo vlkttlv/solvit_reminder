@@ -14,6 +14,7 @@ class Settings(BaseSettings):
     SMTP_PORT: int
     SMTP_USER: str
     SMTP_PASS: str
+    SMTP_USE_TLS: bool
 
     @property
     def DATABASE_URL(self):
